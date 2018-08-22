@@ -15,7 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class HistoryPage {
 
-  private CreditRuleUrl: any = 'https://fun-dev.elastos.org/lotteryall';
+  private CreditRuleUrl: any = 'https://fun-web.elastos.org/lotteryall';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sanitizer: DomSanitizer) {
     this.openIframe()

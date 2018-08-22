@@ -24,10 +24,20 @@ export class HomePage {
   
   public did = null;
   
+  GetQueryKeyString(url, name){
+    var reg = new RegExp("(^|&|/?)"+ name +"=([^&]*)(&|$)");
+    var r = url.match(reg);
+    if(r != null) 
+		return  decodeURI(r[2]);
+	
+	return null;
+  }
+  
   GetQueryString(name){
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if(r!=null)return  decodeURI(r[2]); return null;
+    if(r!= null) return  decodeURI(r[2]); 
+	return null;
   }
   
   constructor(public navCtrl: NavController, public localStorage: Storage, public alertCtrl: AlertController) {
@@ -100,18 +110,75 @@ export class HomePage {
 
   
    require_DID(){
+	 var me = this; 
+	 var success = function (data) {
+        console.log("---ElastosJS require_wallet DID" + data);
+		let type = me.GetQueryKeyString(data, "type");
+	    if(type == "did_login") {
+		let didNum = me.GetQueryKeyString(data, "didNum");
+		let sign = me.GetQueryKeyString(data, "sign");
+		let didPubkey = me.GetQueryKeyString(data, "didPubkey");
+		let message = me.GetQueryKeyString(data, "message");
+	 	//TEMP	
+		//if(check_DID(didPubkey, didNum, message, sign))
+		{	
+            me.did = didNum;		
+		    me.localStorage.set('appDid', didNum);
+		}
+		
+		let alert = me.alertCtrl.create({
+        title: 'Tips',
+        message: 'Get DID Success',
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+              console.log("===ElastosJS Get DID Success tips click");
+			  alert.dismiss();
+            }
+          }
+        ]
+      });
+      alert.present();
+	} 
+		
+    };
+	
 	  cordova.plugins.appmanager.StartApp("wallet/www/index.html" +
 	  "?type=did_login&message=this is did login message&backurl=guess/www/index.html", 
-	  function (data) {}, 
-	  function (error) {});
+	  success, 
+	  function (error) {console.log("===ElastosJS Wallet require_DID error" + error);});
   }
   
   require_pay(){
-	  //console.log('Error: zhh ', "DATE require_wallet" );
-	  cordova.plugins.appmanager.StartApp("wallet/www/index.html" + "?type=payment&amount=10000&address=EeDUy6TmGSFfVxXVzMpVkxLhqwCqujE1WL&memo="+ this.submitParams +"&information=sss&backurl=guess/www/index.html", 
-	  function (data) { }, 
-	  function (error) { });
-  }
+	  var me = this; 
+	  var success = function (data) {
+        console.log("---ElastosJS  require_wallet DID" + data);
+		let type = me.GetQueryKeyString(data, "type");
+	    if(type == "payment") {
+			let txId = me.GetQueryKeyString(data, "txId");		
+			let alert = me.alertCtrl.create({
+			title: 'Tips',
+			message: 'Wallet Pay Success',
+			buttons: [
+			  {
+				text: 'Ok',
+				handler: () => {
+				  console.log("===ElastosJS Wallet Pay Success tips click");
+				  alert.dismiss();
+				}
+			  }
+			]
+			});	  
+			alert.present();
+		} 
+	  }
+	
+	 cordova.plugins.appmanager.StartApp("wallet/www/index.html" + "?type=payment&amount=10000&address=EeDUy6TmGSFfVxXVzMpVkxLhqwCqujE1WL&memo="+ this.submitParams +"&information=sss&backurl=guess/www/index.html", 
+	  success, 
+	  function (error) { console.log("===ElastosJS Wallet Pay error tips click" + error); });
+    }
+
   
 
   

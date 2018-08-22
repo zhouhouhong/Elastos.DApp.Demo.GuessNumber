@@ -2,6 +2,19 @@ console.log('Elastos epk build Start ' + process.argv[2] + '.epk');
 
 var fs = require('fs');
 
+//GetQueryKeyString("guess/www/index.html?type=did_login&message=this is did login message&didNum=iewY47FYSPkEBCRFSzKFfXG1KksiZThy16&sign=iewY47FYSPkEBCRFSzKFfXG1KksiZThy16&didPubkey=iewY47FYSPkEBCRFSzKFfXG1KksiZThy16&SetResult=wallet", "type")
+
+function GetQueryKeyString(url, name){
+    var reg = new RegExp("(^|&|/?)"+ name +"=([^&]*)(&|$)");
+    var r = url.match(reg);
+    if(r != null)  {
+		console.log('Elastos epk build delete  ' + decodeURI(r[2]) + '.epk');
+		return  decodeURI(r[2]);
+	}
+	console.log('Elastos epk build delete 2  ' + name + '.epk');
+	return null;
+  }
+
 if (process.argv.length > 2) {
 	if(fs.existsSync(process.argv[2] + '.epk')){
 		 fs.unlinkSync(process.argv[2] + '.epk');
