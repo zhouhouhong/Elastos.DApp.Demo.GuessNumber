@@ -7,6 +7,7 @@ import { HistoryPage } from '../history/history';
 //add code begin
 declare let cordova: any;
 declare let check_DID: any;
+declare let appService: any;
 //add code  end
 
 @Component({
