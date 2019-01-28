@@ -7,6 +7,14 @@
 </ion-header> -->
 
 <ion-content style="background: url(assets/imgs/Blocks.jpg);" id="body_ele">
+   <div class="m-btn">
+      <span class="u-back" (click)="backHome()" >
+          <img src="assets/imgs/Dot.png" alt="" srcset="">
+      </span>
+      <span class="u-close" (click)="closeApp()" >
+        <img src="assets/imgs/dot-circle-o.png" alt="" srcset="">
+      </span>
+  </div>
   <div class="content_div">
     <img src="assets/imgs/Lottery.png" class="lootery" />
     <p class="desc">若选中的字符与Elastos Blockchain生成的区块Hash值末位值相同，即为押中获奖。

@@ -180,6 +180,13 @@ export class HomePage {
     }
 
   
+   
+  backHome() {
+    appService.launcher();
+  }
 
+  closeApp() {
+    appService.close();
+  }
   
 }

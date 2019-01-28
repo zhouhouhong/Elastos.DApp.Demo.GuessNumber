@@ -1,4 +1,38 @@
 page-home {
+
+   .m-btn {
+    height: 3em;
+    width: 7em;
+    float: right;
+    border: 1px solid #999;
+    border-radius: 2em;
+
+    .u-back {
+      position: relative;
+      display: inline-block;
+      height: 3em;
+      width: 3em;
+      border-right: 1px solid #999;
+      background-size: contain;
+    }
+    .u-close {
+      position: relative;
+      display: inline-block;
+      height: 3em;
+      width: 3em;
+      background-size: contain;
+    }
+    span {
+      img {
+        height: 2em;
+        width: auto;
+        vertical-align: middle;
+        line-height: 3em;
+        margin: .5em;
+      }
+    }
+  }
+	  
     .content_div {
         position: absolute;
         top: 10px;
